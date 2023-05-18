@@ -200,10 +200,7 @@ incremental: false
 
 # Markdown Processing
 kramdown:
-  highlighter: rouge
-    syntax_highlighter_opts:
-      block:
-        line_numbers: true
+
   input: GFM
   hard_wrap: false
   auto_ids: true
@@ -212,6 +209,11 @@ kramdown:
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
+  kramdown:
+  highlighter: rouge
+    syntax_highlighter_opts:
+      block:
+        line_numbers: true
 
 
 # Sass/SCSS
