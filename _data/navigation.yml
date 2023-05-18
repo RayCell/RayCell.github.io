@@ -2,7 +2,7 @@
 main:
   - title: "Home"
     url: https://raycell.github.io
-   - title: "About"
+  - title: "About"
      url: https://raycell.github.io/about/
   - title: "Categories"
      url: https://raycell.github.io/categories
