@@ -91,7 +91,7 @@ function polarInput() {
     slider_d.style('width', '100px');
 
     // Slider for scale range(0, 200), step = 5
-    slider_polarScale = createSlider(0, xymax, xymax/2, 5);
+    slider_polarScale = createSlider(0, xymax, xymax/2, 1);
     slider_polarScale.position(20, height - 40);
     slider_polarScale.style('width', '100px');
 }
