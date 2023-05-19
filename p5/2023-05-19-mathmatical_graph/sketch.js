@@ -2,11 +2,25 @@
 // Turn every coordinates in width & height
 // Put coordinate of x at end in xmax
 // Put coordinate of y at end in ymax
-let width = 500;
-let height = 500;
-let xmax = width/2;
-let ymax = height/2;
+// ratio shows ratio of canvas
+let ratio = 1;
+let width = window.innerWidth * 0.8;
+let height = width * ratio;
+let xmax = width / 2;
+let ymax = height / 2;
 let xymax = (xmax + ymax) / 2;
+
+// When window had resized, call this fuction
+function windowResized() {
+    // Resizing graph by window size
+    width = windowWidth * 0.8;
+    height = width * ratio;
+    xmax = width / 2;
+    ymax = height / 2;
+    xymax = (xmax + ymax) / 2;
+    resizeCanvas(width, height);
+    redraw();
+}
 
 // Graph at Descartes Coordinate System
 // Let's set function f(x)
@@ -78,22 +92,35 @@ function descartesDraw() {
 let slider_d;
 let slider_polarScale;
 
+// When gtheta = sin((s * theta) / t)
+// Set s & t as variable
+let slider_s;
+let slider_t;
 
 function g(theta) {
     // Save equation in variable gtheta
-    let gtheta = sin((8 * theta) / 5);
+    let gtheta = sin(theta);
     return gtheta;
 }
 
 function polarInput() {
+    // Value d means range of graph -> (0, d*PI)
     slider_d = createSlider(0, 20, 10, 0.1);
-    slider_d.position(20, height - 60);
+    slider_d.position(20, height - 80);
     slider_d.style('width', '100px');
 
-    // Slider for scale range(0, 200), step = 5
+    // Slider for scale range(0, 200), step = 1
     slider_polarScale = createSlider(0, xymax, xymax/2, 1);
-    slider_polarScale.position(20, height - 40);
+    slider_polarScale.position(20, height - 60);
     slider_polarScale.style('width', '100px');
+
+    slider_s = createSlider(0, 10, 1, 0.1);
+    slider_s.position(20, height - 40);
+    slider_s.style('width', '100px');
+
+    slider_t = createSlider(1, 10, 1, 0.1);
+    slider_t.position(20, height - 20);
+    slider_t.style('width', '100px');
 }
 
 // function for drawing polar graph
@@ -101,13 +128,15 @@ function polarDraw() {
     // Get values from input
     d = slider_d.value();
     polarScale = slider_polarScale.value();
+    s = slider_s.value();
+    t = slider_t.value();
 
     noFill(); // Not Filled, Only draw line
     beginShape();
     // Sampling range(0, d*PI)
     // Step = PI/180 = 1 dgree
     for(let theta = 0; theta <= d*PI; theta += PI/180) {
-        let r = g(theta);
+        let r = g((s * theta) / t);
         let rx = polarScale * r * cos(theta);
         let ry = polarScale * r * sin(theta);
         vertex(rx + xmax, -ry + ymax);
